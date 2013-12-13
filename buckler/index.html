@@ -73,7 +73,7 @@ button
 <h1>HTML5 Vibration API</h1>
 
 <p id="nosupport">Sorry &ndash; your browser does not support the HTML5 Vibration API.</p>
-<p>(or line out, local navigator object)</p>
+<p>(force true)</p>
 
 <form id="params" method="get">
 
@@ -94,12 +94,11 @@ button
 <p>Please use it as you want, but a link to SitePoint or tweet to <a href="http://twitter.com/craigbuckler">@craigbuckler</a> is appreciated.</p>
 
 <script>
-var navigator = window.navigator;
-
 // detect vibration support
-//navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate || null;
+navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate || null;
 
-if (navigator.vibrate) {
+//if (navigator.vibrate) {
+if (true) {
 
 	// enable form
 	var node = {}, i, name = "nosupport,params,vibrations,duration,delay,stop".split(",");
