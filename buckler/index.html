@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>HTML5 Vibration API</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=3" />
+<style>
+body
+{
+	font-family: sans-serif;
+	font-size: 80%;
+	margin: 10px;
+	color: #333;
+	background-color: #ddd;
+}
+
+#params
+{
+	display: none;
+	margin: 2em 0;
+}
+
+h1
+{
+	font-weight: normal;
+	margin: 0 0 0.3em 0;
+}
+
+label
+{
+	clear: both;
+	display: block;
+	margin: 2px 0;
+}
+
+strong
+{
+	float: left;
+	width: 16em;
+	text-align: right;
+	line-height: 1.5em;
+	margin-right: 0.5em;
+}
+
+input
+{
+	font-size: 1em;
+	width: 5em;
+	text-align: right;
+	padding: 0.2em;
+	background-color: #fff;
+	border: 0 none;
+}
+
+button
+{
+	clear: both;
+	display: block;
+	font-size: 1em;
+	width: 5.4em;
+	text-transform: uppercase;
+	padding: 0.2em 0;
+	margin: 0.1em 0 0 16.5em;
+	color: #fff;
+	background-color: #060;
+	border: 0 none;
+	cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<h1>HTML5 Vibration API</h1>
+
+<p id="nosupport">Sorry &ndash; your browser does not support the HTML5 Vibration API.</p>
+
+<form id="params" method="get">
+
+<label><strong>Number of vibrations:</strong> <input type="number" id="vibrations" value="1" /></label>
+<label><strong>Vibration duration (ms):</strong> <input type="number" id="duration" value="300" /></label>
+<label><strong>Delay between vibration (ms):</strong> <input type="number" id="delay" value="150" /></label>
+
+<button type="submit">Start</button>
+<button id="stop">Stop</button>
+
+</form>
+
+<p>For more information, please please refer to:<br />
+<a href="http://www.sitepoint.com/html5-vibration-api/">How to use the HTML5 Vibration API</a></p>
+
+<p>This example code was developed by <a href="http://twitter.com/craigbuckler">Craig Buckler</a> of <a href="http://optimalworks.net/">OptimalWorks.net</a> for <a href="http://sitepoint.com/">SitePoint.com</a>.</p>
+
+<p>Please use it as you want, but a link to SitePoint or tweet to <a href="http://twitter.com/craigbuckler">@craigbuckler</a> is appreciated.</p>
+
+<script>
+// detect vibration support
+navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate || null;
+
+if (navigator.vibrate) {
+
+	// enable form
+	var node = {}, i, name = "nosupport,params,vibrations,duration,delay,stop".split(",");
+	for (i = 0; i < name.length; i++) {
+		node[name[i]] = document.getElementById(name[i]);
+	}
+	
+	// form submit event
+	node.params.onsubmit = function(e) {
+		e.preventDefault();
+		
+		var v = [], i,
+			vib = node.vibrations.value || 0,
+			dur = node.duration.value || 0,
+			del = node.delay.value || 0;
+		
+		// define vibration settings
+		for (i = 0; i < vib; i++) {
+			v = v.concat([dur, del]);
+		}
+		
+		// do vibration
+		navigator.vibrate(v);
+	
+	};
+	
+	// stop event
+	node.stop.onclick = function(e) {
+		e.preventDefault();
+		navigator.vibrate(0);
+	};
+	
+	node.nosupport.style.display = "none";
+	node.params.style.display = "block";
+
+}
+</script>
+</body>
+</html>
